@@ -16,29 +16,7 @@ export const useCallControls = () => {
 
     const {leave: leaveRTM} = useRTMControls();
 
-    const toggleVideo = useCallback(async () => {
-        const videoTrack = client.localTracks.filter(track => track.trackMediaType === "video");
-        if (videoTrack.length <= 0) {
-            try {
-                const video = await AgoraRTC.createCameraVideoTrack();
-                video.play(localVideoDiv);
-                await client.publish(video);
-            } catch (error) {
-                console.log(error);
-            }
-            return;
-        }
-        const video = videoTrack[0];
-        if (video.isPlaying) {
-            video.stop();
-            video.close();
-            try {
-                await client.unpublish(video);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }, [client, localVideoDiv])
+ 
 
     const toggleAudio = useCallback(async () => {
         const audioTrack = client.localTracks.filter(track => track.trackMediaType === "audio");

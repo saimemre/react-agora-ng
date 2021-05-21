@@ -45,22 +45,6 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
             //TODO: Report error when audio permissions are denied
             console.log(error);
         }
-
-        try {
-            const videoTrack = await AgoraRTC.createCameraVideoTrack();
-            videoTrack.play(localVideoDiv);
-            setLocalVideoDiv(localVideoDiv);
-            if (mode === 'live') {
-                if (isHost) {
-                    await rtcClient.publish(videoTrack);
-                }
-            } else {
-                await rtcClient.publish(videoTrack);
-            }
-        } catch (error) {
-            //TODO: Report error when video permissions are denied
-            console.log(error);
-        }
     }, [isHost, rtcClient, localVideoDiv, setLocalVideoDiv]);
 
     const startCallAndStream = useCallback(() => {
