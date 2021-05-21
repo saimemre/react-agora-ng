@@ -6,7 +6,7 @@ export const useRTMEvents = () => {
 
     const [events, setEvent] = useState({event: '', data: {}});
     const {rtmChannel, rtmClient} = useContext(AgoraContext);
-    const {toggleVideo, toggleAudio, stopScreenShare, leaveCall} = useCallControls()
+    const { toggleAudio, stopScreenShare, leaveCall} = useCallControls()
 
     useEffect(() => {
         if (rtmChannel) {
@@ -117,7 +117,7 @@ export const useRTMEvents = () => {
                 rtmClient.removeAllListeners();
         }
 
-    }, [setEvent, rtmClient, rtmChannel, toggleAudio, toggleVideo, leaveCall, stopScreenShare]);
+    }, [setEvent, rtmClient, rtmChannel, toggleAudio, leaveCall, stopScreenShare]);
 
     return {
         events

@@ -113,7 +113,6 @@ export const useCallControls = () => {
 
     return {
         toggleAudio,
-        toggleVideo,
         leaveCall,
         startScreenShare,
         stopScreenShare,

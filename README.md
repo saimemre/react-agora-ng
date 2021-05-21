@@ -222,8 +222,7 @@ const App = () => {
 	});
 	
 	//get the call controlls
-	const { toggleVideo, 
-			toggleAudio, 
+	const { toggleAudio, 
 			leave, 
 			startScreenShare, 
 			stopScreenShare
