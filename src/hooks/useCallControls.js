@@ -18,10 +18,9 @@ export const useCallControls = () => {
 
  
 
-    const toggleAudio = useCallback(async ({mute}) => {
+    const toggleAudio = useCallback(async () => {
         const audioTrack = client.localTracks.filter(track => track.trackMediaType === "audio");
-        if (mute === 0) {
-            console.log("false içinde", mute);
+        if (audioTrack.length <= 0) {
             try {
                 const audio = await AgoraRTC.createMicrophoneAudioTrack();
                 await client.publish(audio);
@@ -29,19 +28,16 @@ export const useCallControls = () => {
                 console.log(error);
             }
             return;
-        }else{
-            console.log("true içinde", mute);
-            const audio = audioTrack[0];
-            audio.stop();
-            audio.close();
-            try {
-
-                await client.unpublish(audio);
-            } catch (error) {
-                console.log(error);
-            }
         }
-        
+        const audio = audioTrack[0];
+        audio.stop();
+        audio.close();
+        try {
+
+            await client.unpublish(audio);
+        } catch (error) {
+            console.log(error);
+        }
     }, [client]);
 
 
