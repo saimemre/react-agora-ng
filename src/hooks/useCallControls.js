@@ -32,13 +32,14 @@ export const useCallControls = () => {
             const audio = audioTrack[0];
             audio.stop();
             audio.close();
-        }
-        try {
+            try {
 
-            await client.unpublish(audio);
-        } catch (error) {
-            console.log(error);
+                await client.unpublish(audio);
+            } catch (error) {
+                console.log(error);
+            }
         }
+        
     }, [client]);
 
 
