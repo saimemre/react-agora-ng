@@ -64,10 +64,10 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
 
             if (mode === 'live') {
                 if (isHost) {
-                    await rtcClient.publish(videoTrack);
+                    await rtcClient.publish(screenTrack);
                 }
             } else {
-                await rtcClient.publish(videoTrack);
+                await rtcClient.publish(screenTrack);
             }
         } catch (error) {
             //TODO: Report error when video permissions are denied
