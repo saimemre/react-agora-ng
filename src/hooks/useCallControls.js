@@ -66,11 +66,9 @@ export const useCallControls = () => {
 
 
     const startScreenShare = useCallback(async ({channel, token}) => {
-        const shareClient = AgoraRTC.createClient({mode: "rtc", codec: "vp8"});
         if (!screenShareClient) {
             try {
                 console.log('shareclienta geldik', shareClient)
-                await shareClient.join(appId, channel, token);
 
                 const screenTrack = await AgoraRTC.createScreenVideoTrack({
                     encoderConfig: {
@@ -78,16 +76,19 @@ export const useCallControls = () => {
                         width: 1920
                     }
                 });
-                await shareClient.publish(screenTrack);
-                setScreenShareClient(shareClient);
-                console.log('Client', shareClient)
+                await client.publish(screenTrack);
+                setScreenShareClient(client);
+
+                screenTrack.play(localVideoDiv);
+                setLocalVideoDiv(localVideoDiv);
+                console.log('Client', client)
 
             } catch (error) {
                 console.log(error);
                 return error;
             }
         }
-    }, [setScreenShareClient, screenShareClient, appId]);
+    }, [client]);
 
     const stopScreenShare = useCallback(async () => {
         try {
