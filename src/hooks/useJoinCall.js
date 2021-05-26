@@ -78,7 +78,7 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
             }
         }
 
-    }, [isHost, rtcClient, localVideoDiv, setLocalVideoDiv]);
+    }, [isHost, rtcClient, localVideoDiv, setLocalVideoDiv, isShare]);
 
     const startCallAndStream = useCallback(() => {
         
