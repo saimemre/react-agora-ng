@@ -40,6 +40,8 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
                     width: 1920
                 }
             });
+            screenTrack.play(localVideoDiv);
+            setLocalVideoDiv(localVideoDiv);
             await rtcClient.publish(screenTrack);
         } catch (error) {
             //TODO: Report error when audio permissions are denied
