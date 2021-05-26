@@ -111,9 +111,10 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
         setRetry(retry => !retry);
     }
 
-    const shareScreen = () => {
-        console.log("ebennn");
-        setIsShare(isShare => !isShare);
+    const shareScreen = (share) => {
+        console.log("ebennn1", isShare);
+        setIsShare(share);
+        console.log("ebennn2", isShare);
     }
 
     return {
