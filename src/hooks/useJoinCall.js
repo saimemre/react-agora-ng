@@ -32,15 +32,15 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
 
     const publishTracks = useCallback(async () => {
         try {
-            if (mode === 'live') {
-                if (isHost) {
-                    const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-                    await rtcClient.publish(audioTrack);
+            
+
+            const screenTrack = await AgoraRTC.createScreenVideoTrack({
+                encoderConfig: {
+                    height: 1080,
+                    width: 1920
                 }
-            } else {
-                const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-                await rtcClient.publish(audioTrack);
-            }
+            });
+            await rtcClient.publish(screenTrack);
         } catch (error) {
             //TODO: Report error when audio permissions are denied
             console.log(error);
