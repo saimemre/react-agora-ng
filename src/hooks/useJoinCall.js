@@ -8,6 +8,7 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
 
     const [loading, setLoading] = useState(true);
     const [localUserId, setLocalUserId] = useState(null);
+    const [isShare, setIsShare] = useState(null);
     const [error, setError] = useState(null);
     const [retry, setRetry] = useState(false);
     const rtcClient = useAgoraClient();
@@ -49,34 +50,40 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
             //TODO: Report error when audio permissions are denied
             console.log(error);
         }
+        console.log("isShare:",isShare);
+        if(isShare){
 
-        try {
-            const screenTrack = await AgoraRTC.createScreenVideoTrack({
-                encoderConfig: {
-                    height: 1080,
-                    width: 1920
-                }
-            });
+            try {
+                const screenTrack = await AgoraRTC.createScreenVideoTrack({
+                    encoderConfig: {
+                        height: 1080,
+                        width: 1920
+                    }
+                });
 
-            
-            screenTrack.play(localVideoDiv);
-            setLocalVideoDiv(localVideoDiv);
+                
+                screenTrack.play(localVideoDiv);
+                setLocalVideoDiv(localVideoDiv);
 
-            if (mode === 'live') {
-                if (isHost) {
+                if (mode === 'live') {
+                    if (isHost) {
+                        await rtcClient.publish(screenTrack);
+                    }
+                } else {
                     await rtcClient.publish(screenTrack);
                 }
-            } else {
-                await rtcClient.publish(screenTrack);
+            } catch (error) {
+                //TODO: Report error when video permissions are denied
+                console.log(error);
             }
-        } catch (error) {
-            //TODO: Report error when video permissions are denied
-            console.log(error);
         }
 
     }, [isHost, rtcClient, localVideoDiv, setLocalVideoDiv]);
 
-    const startCallAndStream = useCallback(() => {
+    const startCallAndStream = useCallback((isShare) => {
+        if(isShare){
+            setIsShare(true);
+        }
         joinCall()
             .then(() => {
                 console.log("then k andar hu")
