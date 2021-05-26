@@ -80,10 +80,8 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
 
     }, [isHost, rtcClient, localVideoDiv, setLocalVideoDiv]);
 
-    const startCallAndStream = useCallback((isShare) => {
-        if(isShare){
-            setIsShare(true);
-        }
+    const startCallAndStream = useCallback(() => {
+        
         joinCall()
             .then(() => {
                 console.log("then k andar hu")
@@ -113,11 +111,16 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
         setRetry(retry => !retry);
     }
 
+    const shareScreen = () => {
+        setIsShare(isShare => !isShare);
+    }
+
     return {
         loading,
         error,
         localUserId,
         retryConnect,
-        startCall: startCallAndStream
+        startCall: startCallAndStream,
+        shareScreen
     };
 }
