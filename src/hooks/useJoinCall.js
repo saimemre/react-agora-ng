@@ -32,21 +32,48 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
 
     const publishTracks = useCallback(async () => {
         try {
+            if (mode === 'live') {
+                if (isHost) {
+                    const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                    await rtcClient.publish(audioTrack);
+                }
+            } else {
+                const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                await rtcClient.publish(audioTrack);
+            }
+
             
 
+
+        } catch (error) {
+            //TODO: Report error when audio permissions are denied
+            console.log(error);
+        }
+
+        try {
             const screenTrack = await AgoraRTC.createScreenVideoTrack({
                 encoderConfig: {
                     height: 1080,
                     width: 1920
                 }
             });
+
+            
             screenTrack.play(localVideoDiv);
             setLocalVideoDiv(localVideoDiv);
-            await rtcClient.publish(screenTrack);
+
+            if (mode === 'live') {
+                if (isHost) {
+                    await rtcClient.publish(videoTrack);
+                }
+            } else {
+                await rtcClient.publish(videoTrack);
+            }
         } catch (error) {
-            //TODO: Report error when audio permissions are denied
+            //TODO: Report error when video permissions are denied
             console.log(error);
         }
+
     }, [isHost, rtcClient, localVideoDiv, setLocalVideoDiv]);
 
     const startCallAndStream = useCallback(() => {
