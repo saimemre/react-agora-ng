@@ -68,7 +68,6 @@ export const useCallControls = () => {
     const startScreenShare = useCallback(async ({channel, token}) => {
         if (!screenShareClient) {
             try {
-                console.log('shareclienta geldik', shareClient)
 
                 const screenTrack = await AgoraRTC.createScreenVideoTrack({
                     encoderConfig: {
