@@ -29,15 +29,18 @@ export const useCallControls = () => {
             }
             return;
         }
-        const audio = audioTrack[0];
-        audio.stop();
-        audio.close();
-        try {
-
-            await client.unpublish(audio);
-        } catch (error) {
-            console.log(error);
-        }
+        audioTrack.map((audio) => {
+            audio.stop();
+            audio.close();
+        
+            try {
+                console.log("varsa sesi kapat");
+                client.unpublish(audio);
+            } catch (error) {
+                console.log("sesi kapat hata:");
+                console.log(error);
+            }
+        });
     }, [client]);
 
 
