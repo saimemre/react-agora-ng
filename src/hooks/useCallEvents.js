@@ -21,6 +21,19 @@ export const useCallEvents = () => {
             });
         });
 
+        if(screenShareClient){
+            const videoTrack = screenShareClient.localTracks;
+            
+            videoTrack[0].on('track-ended', () => {
+                setEvents({
+                    event: 'track-ended',
+                    data: {
+                        reason: false
+                    }
+                });
+            });
+        }
+
         // user events
         client.on("user-published", async (remoteUser, mediaType) => {
             if (screenShareClient && screenShareClient.uid && (remoteUser.uid === screenShareClient.uid)) {

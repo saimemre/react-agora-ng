@@ -5,3 +5,4 @@ export * from './useJoinCall';
 export * from './useRTMClient';
 export * from './useRTMControls';
 export * from './useRTMEvents';
+export * from './useScreenClient';

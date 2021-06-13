@@ -34,10 +34,8 @@ export const useCallControls = () => {
             audio.close();
         
             try {
-                console.log("varsa sesi kapat");
                 client.unpublish(audio);
             } catch (error) {
-                console.log("sesi kapat hata:");
                 console.log(error);
             }
         });
@@ -83,7 +81,6 @@ export const useCallControls = () => {
 
                 screenTrack.play(localVideoDiv);
                 setLocalVideoDiv(localVideoDiv);
-                console.log('Client', client)
 
             } catch (error) {
                 console.log(error);
