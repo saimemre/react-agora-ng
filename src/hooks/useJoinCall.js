@@ -35,11 +35,15 @@ export const useJoinCall = ({channel, token, userId, localVideoDiv, isHost, lazy
         try {
             if (mode === 'live') {
                 if (isHost) {
-                    const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                    const audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+                        encoderConfig: "high_quality_stereo",
+                      });
                     await rtcClient.publish(audioTrack);
                 }
             } else {
-                const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                const audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+                    encoderConfig: "high_quality_stereo",
+                  });
                 await rtcClient.publish(audioTrack);
             }
 

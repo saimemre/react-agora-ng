@@ -22,7 +22,9 @@ export const useCallControls = () => {
         const audioTrack = client.localTracks.filter(track => track.trackMediaType === "audio");
         if (audioTrack.length <= 0) {
             try {
-                const audio = await AgoraRTC.createMicrophoneAudioTrack();
+                const audio = await AgoraRTC.createMicrophoneAudioTrack({
+                    encoderConfig: "high_quality_stereo",
+                  });
                 await client.publish(audio);
             } catch (error) {
                 console.log(error);
